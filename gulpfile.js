@@ -6,6 +6,7 @@ const browserSync = require('browser-sync').create()
 const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
+const imagemin = require('gulp-imagemin') 
 
 
 function browsersync(){
@@ -48,6 +49,13 @@ function styles(){
         }))
         .pipe(dest('dist/css'))
         .pipe(browserSync.stream())
+}
+
+function images(){
+
+    return src('src/images/**/*')
+        .pipe(imagemin())
+        .pipe(dest('dist/images'))
 }
 
 function build(){
