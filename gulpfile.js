@@ -7,6 +7,7 @@ const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
 const imagemin = require('gulp-imagemin') 
+const del = require('del')
 
 
 function browsersync(){
@@ -74,6 +75,10 @@ function images(){
         .pipe(dest('dist/images'))
 }
 
+function cleanDist(){
+    return del('dist')
+}
+
 function build(){
     return src([
         'src/css/**.css', 
@@ -89,12 +94,14 @@ function watching(){
     watch(['src/scss/**/*.scss'], styles);
     watch(['src/*.html'],html);
     watch(['src/js/*.js'], scripts)
+    // watch(['src/img'])
 
     watch(['src/*.html']).on('change', browserSync.reload);
     watch(['src/scss/**/*.scss']).on('change', browserSync.reload);
     watch(['src/js/**/*.js']).on('change', browserSync.reload);
 }
 
+exports.images = images
 exports.build = build
 exports.browsersync = browsersync;
 exports.html = html;
