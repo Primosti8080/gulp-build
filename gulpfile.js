@@ -1,4 +1,4 @@
-const {src, dest, watch, parallel, del} = require('gulp')
+const {src, dest, watch, parallel, del, series} = require('gulp')
 const scss = require('gulp-sass')(require('sass'))
 const htmlmin = require('gulp-htmlmin')
 const concat = require('gulp-concat')
@@ -6,11 +6,10 @@ const browserSync = require('browser-sync').create()
 const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
-const imagemin = require('gulp-imagemin') 
-const del = require('del')
 
 
 function browsersync(){
+
     browserSync.init({
         server:{
             baseDir:"./dist"
@@ -33,7 +32,6 @@ function scripts(){
         'src/js/**.js'
     ])  
         .pipe(concat('main.min.js'))
-        // .pipe(minify({noSource: true}))
         .pipe(uglify())
         .pipe(dest('dist/js')) 
         .pipe(browserSync.stream())
@@ -54,24 +52,7 @@ function styles(){
 
 function images(){
 
-    return src('src/images/**/*')
-        .pipe(imagemin([
-            gifsicle({interlaced: true}),
-            mozjpeg({quality: 75, progressive: true}),
-            optipng({optimizationLevel: 5}),
-            svgo({
-                plugins: [
-                    {
-                        name: 'removeViewBox',
-                        active: true
-                    },
-                    {
-                        name: 'cleanupIDs',
-                        active: false
-                    }
-                ]
-            })
-        ]))
+    return src('src/images/**') 
         .pipe(dest('dist/images'))
 }
 
@@ -94,21 +75,22 @@ function watching(){
     watch(['src/scss/**/*.scss'], styles);
     watch(['src/*.html'],html);
     watch(['src/js/*.js'], scripts)
-    // watch(['src/img'])
 
     watch(['src/*.html']).on('change', browserSync.reload);
     watch(['src/scss/**/*.scss']).on('change', browserSync.reload);
     watch(['src/js/**/*.js']).on('change', browserSync.reload);
 }
 
-exports.images = images
-exports.build = build
+
+exports.cleanDist = cleanDist;
+exports.images = images;
 exports.browsersync = browsersync;
 exports.html = html;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.watching = watching;
 
+exports.build = series(cleanDist, images, build)
 exports.default = parallel(scripts, browsersync, watching)
 
 
