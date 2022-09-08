@@ -6,6 +6,7 @@ const browserSync = require('browser-sync').create()
 const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
+const fileinclude = require('gulp-file-include')
 
 
 function browsersync(){
@@ -20,6 +21,9 @@ function browsersync(){
 function html(){
 
     return src('src/**.html')
+        .pipe( fileinclude({
+            prefix:'@'
+        }) )
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(dest('dist'))
         .pipe(browserSync.stream())
@@ -35,6 +39,10 @@ function scripts(){
         .pipe(uglify())
         .pipe(dest('dist/js')) 
         .pipe(browserSync.stream())
+}
+
+function ejsConverter(){
+    
 }
 
 function styles(){

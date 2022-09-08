@@ -26,6 +26,8 @@
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-include-html": "^1.0.14",
     "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^3.0.0"
   }
