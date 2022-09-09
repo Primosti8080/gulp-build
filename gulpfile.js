@@ -1,4 +1,4 @@
-const {src, dest, watch, parallel, del, series} = require('gulp')
+const {src, dest, watch, parallel,series} = require('gulp')
 const scss = require('gulp-sass')(require('sass'))
 const htmlmin = require('gulp-htmlmin')
 const concat = require('gulp-concat')
@@ -7,8 +7,12 @@ const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
 const fileinclude = require('gulp-file-include')
-const ejs = require("gulp-ejs")
+const ejshtml = require("gulp-ejs")
 
+
+function deleteDist(){
+    return deleteAsync('/dist')
+}
 
 function browsersync(){
 
@@ -42,10 +46,6 @@ function scripts(){
         .pipe(browserSync.stream())
 }
 
-function ejsConverter(){
-    
-}
-
 function styles(){
 
     return src('src/scss/**.scss')
@@ -67,7 +67,7 @@ function images(){
 
 function ejs(){
     return src('src/ejsfiles/**.ejs')
-        .pipe(ejs())
+        .pipe(ejshtml())
         .pipe(dest('dist/ejs'))   
 }
 
@@ -85,6 +85,7 @@ function build(){
     .pipe(dest('dist'))
 
 }
+
 
 function watching(){
     watch(['src/scss/**/*.scss'], styles);
@@ -106,8 +107,9 @@ exports.scripts = scripts;
 exports.watching = watching;
 exports.ejs = ejs;
 
+exports.deleteDist = deleteDist
 
-exports.build = series(cleanDist, images, build)
+exports.build = series(images, build)
 exports.default = parallel(scripts, browsersync, watching)
 
 
