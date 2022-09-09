@@ -6,7 +6,5 @@ class User{
     }
 }
 
-/* code is there */
-
 console.log('here')
 
