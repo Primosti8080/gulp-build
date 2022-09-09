@@ -8,7 +8,7 @@ const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
 const fileinclude = require('gulp-file-include')
 const ejshtml = require("gulp-ejs")
-
+const gulpClean = require('gulp-clean')
 
 function deleteDist(){
     return deleteAsync('/dist')
@@ -85,6 +85,7 @@ function build(){
 function watching(){
     watch(['src/scss/**/*.scss'], styles);
     watch(['src/*.html'],html);
+    watch(['src/parts/**.html'],html);
     watch(['src/js/*.js'], scripts)
 
     watch(['src/*.html']).on('change', browserSync.reload);
