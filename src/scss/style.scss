@@ -1,4 +1,6 @@
 
+// ========================= HEADER =========================
+
 .header{
     border-bottom: 2px solid #ECEBEB;
 }
@@ -43,6 +45,46 @@
         }
     }
 }
+
+// ========================= FOOTER =============================
+    .footer{
+        padding: 74px 0;
+        border-top: 2px solid #ECEBEB;
+        border-bottom: 2px solid #ECEBEB;
+        &-logo{
+            &__line{
+                display: flex;
+                justify-content: center;
+                & > .logo{
+                    color: #5DBD6D;
+                    padding-bottom: 38px;
+                    // font-family: 'Inter';
+                    font-weight: 700;
+                    font-size: 17px;
+                    line-height: 129%;
+                    letter-spacing: 0.045em;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        &-list{
+            display: flex;
+            align-items: center;
+            & .active{
+                color: #FD576C;
+            }
+            & > li{
+                margin-right: 93px;
+            }
+            &__wrapper{
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+
+
 
 
 
