@@ -77,16 +77,6 @@ select {
   }
 }
 
-.init{
-  background-color: #ccc;
-  padding: 40px;
-  &-grid{
-    padding-top: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 40px;
-  }
-} 
 
 
 
