@@ -7,6 +7,7 @@ const minify = require('gulp-minify')
 const uglify = require('gulp-uglify-es').default
 const autoprefixer = require('gulp-autoprefixer')
 const fileinclude = require('gulp-file-include')
+const ejs = require("gulp-ejs")
 
 
 function browsersync(){
@@ -64,6 +65,12 @@ function images(){
         .pipe(dest('dist/images'))
 }
 
+function ejs(){
+    return src('src/ejsfiles/**.ejs')
+        .pipe(ejs())
+        .pipe(dest('dist/ejs'))   
+}
+
 function cleanDist(){
     return del('dist')
 }
@@ -97,6 +104,8 @@ exports.html = html;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.watching = watching;
+exports.ejs = ejs;
+
 
 exports.build = series(cleanDist, images, build)
 exports.default = parallel(scripts, browsersync, watching)
