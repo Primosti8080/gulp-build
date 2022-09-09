@@ -71,10 +71,6 @@ function ejs(){
         .pipe(dest('dist/ejs'))   
 }
 
-function cleanDist(){
-    return del('dist')
-}
-
 function build(){
     return src([
         'src/css/**.css', 
@@ -85,7 +81,6 @@ function build(){
     .pipe(dest('dist'))
 
 }
-
 
 function watching(){
     watch(['src/scss/**/*.scss'], styles);
@@ -98,7 +93,6 @@ function watching(){
 }
 
 
-exports.cleanDist = cleanDist;
 exports.images = images;
 exports.browsersync = browsersync;
 exports.html = html;
@@ -106,8 +100,8 @@ exports.styles = styles;
 exports.scripts = scripts;
 exports.watching = watching;
 exports.ejs = ejs;
-
 exports.deleteDist = deleteDist
+
 
 exports.build = series(images, build)
 exports.default = parallel(scripts, browsersync, watching)
