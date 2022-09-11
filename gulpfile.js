@@ -9,6 +9,8 @@ const autoprefixer = require('gulp-autoprefixer')
 const fileinclude = require('gulp-file-include')
 const ejshtml = require("gulp-ejs")
 const gulpClean = require('gulp-clean')
+const clean = require('gulp-clean');
+
 
 function deleteDist(){
     return deleteAsync('/dist')
@@ -29,7 +31,7 @@ function html(){
         .pipe( fileinclude({
             prefix:'@'
         }) )
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(dest('dist'))
         .pipe(browserSync.stream())
 }
@@ -79,20 +81,20 @@ function build(){
         'src/**.html'
     ],{base: 'src'})   
     .pipe(dest('dist'))
-
 }
 
 function watching(){
     watch(['src/scss/**/*.scss'], styles);
-    watch(['src/*.html'],html);
-    watch(['src/parts/**.html'],html);
+    watch(['src/*.html'], html);
+    watch(['src/img/**'], images);
+    watch(['src/parts/**.html'], html);
     watch(['src/js/*.js'], scripts)
 
+    watch(['src/**'], images)
     watch(['src/*.html']).on('change', browserSync.reload);
     watch(['src/scss/**/*.scss']).on('change', browserSync.reload);
     watch(['src/js/**/*.js']).on('change', browserSync.reload);
 }
-
 
 exports.images = images;
 exports.browsersync = browsersync;
